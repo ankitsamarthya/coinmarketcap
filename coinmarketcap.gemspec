@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ankit Samarthya"]
   spec.email         = ["ankitsamar@outlook.com"]
 
-  spec.summary       = %q{Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{Write a longer description or delete this line.}
+  spec.summary       = %q{Coinmarketcap.com API ruby wrapper}
+  spec.description   = %q{Get all the coins listed on coinmarketcap.com}
   spec.homepage      = "https://github.com/ankitsamarthya/coinmarketcap"
   spec.license       = "MIT"
 
