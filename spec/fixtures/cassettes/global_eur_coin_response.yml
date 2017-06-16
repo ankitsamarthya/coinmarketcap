@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.coinmarketcap.com/v1/global/?convert=EUR
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jun 2017 20:45:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=de1e1a793e7349f7b4d3ef4cf92d54b481497645951; expires=Sat, 16-Jun-18
+        20:45:51 GMT; path=/; domain=.coinmarketcap.com; HttpOnly
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 37009d7fbf252edb-DEL
+    body:
+      encoding: ASCII-8BIT
+      string: "{\n    \"total_market_cap_usd\": 108036324927.0, \n    \"total_24h_volume_usd\":
+        4053019101.0, \n    \"bitcoin_percentage_of_market_cap\": 38.42, \n    \"active_currencies\":
+        756, \n    \"active_assets\": 128, \n    \"active_markets\": 4179, \n    \"total_market_cap_eur\":
+        96559842202.0, \n    \"total_24h_volume_eur\": 3622474988.0\n}"
+    http_version: 
+  recorded_at: Fri, 16 Jun 2017 20:45:52 GMT
+recorded_with: VCR 3.0.3
