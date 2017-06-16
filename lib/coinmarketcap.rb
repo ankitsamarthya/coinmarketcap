@@ -11,4 +11,8 @@ module Coinmarketcap
     end
   end
 
+  def self.coin(id)
+    HTTParty.get("https://api.coinmarketcap.com/v1/ticker/#{id}/")
+  end
+
 end

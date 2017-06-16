@@ -28,4 +28,29 @@ describe Coinmarketcap do
       end
     end
   end
+
+  describe "#coin" do
+    context 'with valid id' do
+      it "should receive a 200 response with coin details" do
+        VCR.use_cassette('single_coin_response') do
+          response = Coinmarketcap.coin('bitcoin')
+          coin = JSON.parse(response.body)
+          expect(response.code).to eq(200)
+          expect(coin.count).to eq(1)
+          expect(coin.first['id']).to eq('bitcoin')
+        end
+      end
+    end
+
+    context 'with invalid id' do
+      it "should receive a 404 response" do
+        VCR.use_cassette('wrong_coin_response') do
+          response = Coinmarketcap.coin('random')
+          coin = JSON.parse(response.body)
+          expect(response.code).to eq(404)
+          expect(coin['error']).to match(/id not found/)
+        end
+      end
+    end
+  end
 end
