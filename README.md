@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/coinmarketcap.svg)](https://badge.fury.io/rb/coinmarketcap) [![Code Climate](https://codeclimate.com/github/ankitsamarthya/coinmarketcap/badges/gpa.svg)](https://codeclimate.com/github/ankitsamarthya/coinmarketcap) [![Coverage Status](https://coveralls.io/repos/github/ankitsamarthya/coinmarketcap/badge.svg?branch=master)](https://coveralls.io/github/ankitsamarthya/coinmarketcap?branch=master) [![Issue Count](https://codeclimate.com/github/ankitsamarthya/coinmarketcap/badges/issue_count.svg)](https://codeclimate.com/github/ankitsamarthya/coinmarketcap)
+
 # Coinmarketcap
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/coinmarketcap`. To experiment with that code, run `bin/console` for an interactive prompt.
