@@ -1,11 +1,11 @@
 require 'bundler/setup'
+require 'coveralls'
+Coveralls.wear!
+
 require 'coinmarketcap'
-require 'simplecov'
 require 'vcr'
 require 'webmock/rspec'
 require 'pry'
-
-SimpleCov.start
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
