@@ -5,6 +5,18 @@ describe Coinmarketcap do
     expect(Coinmarketcap::VERSION).not_to be nil
   end
 
+  describe "#get_historical_price" do
+    context 'with valid id and start and end dates' do
+      it "should receive an non empty array" do
+        VCR.use_cassette('historical_price_response') do
+          data = Coinmarketcap.get_historical_price('bitcoin', '20170908', '20170914')
+          expect(data).to be_a Array
+          expect(data.count).to be > 0
+        end
+      end
+    end
+  end
+
   describe "#coins" do
     context 'without limit' do
       it "should receive a 200 response with all coins" do
