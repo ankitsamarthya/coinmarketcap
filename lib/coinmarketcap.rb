@@ -43,7 +43,7 @@ module Coinmarketcap
           price_bundle[:avg] = ( price_bundle[:high] + price_bundle[:low] ) / 2.0
           prices << price_bundle
         end
-      rescue => error
+      rescue
         next
       end
     end
