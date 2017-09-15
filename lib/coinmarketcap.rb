@@ -25,7 +25,7 @@ module Coinmarketcap
     prices = []
     doc = Nokogiri::HTML(open("https://coinmarketcap.com/currencies/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
     rows = doc.css('tr')
-    if rows.count == 31
+    if rows.count == 31 || rows.count == 2
       doc = Nokogiri::HTML(open("https://coinmarketcap.com/assets/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
       rows = doc.css('tr')
     end
