@@ -25,22 +25,24 @@ module Coinmarketcap
     prices = []
     doc = Nokogiri::HTML(open("https://coinmarketcap.com/currencies/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
     rows = doc.css('tr')
-    if rows.count == 31 || rows.count == 2
+    if rows.count == 31
       doc = Nokogiri::HTML(open("https://coinmarketcap.com/assets/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
       rows = doc.css('tr')
     end
     rows.shift
     rows.each do |row|
       begin
-        price_bundle = {}
         each_row = Nokogiri::HTML(row.to_s).css('td')
-        price_bundle[:date] = Date.parse(each_row[0].text)
-        price_bundle[:open] = each_row[1].text.to_f
-        price_bundle[:high] = each_row[2].text.to_f
-        price_bundle[:low] = each_row[3].text.to_f
-        price_bundle[:close] = each_row[4].text.to_f
-        price_bundle[:avg] = ( price_bundle[:high] + price_bundle[:low] ) / 2.0
-        prices << price_bundle
+        if each_row.count > 1
+          price_bundle = {}
+          price_bundle[:date] = Date.parse(each_row[0].text)
+          price_bundle[:open] = each_row[1].text.to_f
+          price_bundle[:high] = each_row[2].text.to_f
+          price_bundle[:low] = each_row[3].text.to_f
+          price_bundle[:close] = each_row[4].text.to_f
+          price_bundle[:avg] = ( price_bundle[:high] + price_bundle[:low] ) / 2.0
+          prices << price_bundle
+        end
       rescue => error
         next
       end
