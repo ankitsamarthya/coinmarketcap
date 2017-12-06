@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.coinmarketcap.com/v1/ticker/bitcoin/
+    uri: https://api.coinmarketcap.com/v1/ticker/bitcoin/?convert=USD
     body:
       encoding: US-ASCII
       string: ''
