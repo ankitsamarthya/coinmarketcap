@@ -4,7 +4,6 @@ require 'httparty'
 require 'nokogiri'
 
 module Coinmarketcap
-
   def self.coins(limit = nil)
     if limit.nil?
       HTTParty.get('https://api.coinmarketcap.com/v1/ticker/')
@@ -21,7 +20,7 @@ module Coinmarketcap
     HTTParty.get("https://api.coinmarketcap.com/v1/global/?convert=#{currency}")
   end
 
-  def self.get_historical_price(id, start_date, end_date) #20170908
+  def self.get_historical_price(id, start_date, end_date) # 20170908
     prices = []
     doc = Nokogiri::HTML(open("https://coinmarketcap.com/currencies/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
     rows = doc.css('tr')
@@ -40,7 +39,7 @@ module Coinmarketcap
           price_bundle[:high] = each_row[2].text.to_f
           price_bundle[:low] = each_row[3].text.to_f
           price_bundle[:close] = each_row[4].text.to_f
-          price_bundle[:avg] = ( price_bundle[:high] + price_bundle[:low] ) / 2.0
+          price_bundle[:avg] = (price_bundle[:high] + price_bundle[:low]) / 2.0
           prices << price_bundle
         end
       rescue
@@ -49,5 +48,4 @@ module Coinmarketcap
     end
     prices
   end
-
 end
