@@ -64,6 +64,18 @@ describe Coinmarketcap do
         end
       end
     end
+
+    context 'with valid id and a currency code' do
+      it "should receive a 200 response with coin details" do
+        VCR.use_cassette('single_eur_coin_response') do
+          response = Coinmarketcap.coin('bitcoin', 'EUR')
+          coin = JSON.parse(response.body)
+          expect(response.code).to eq(200)
+          expect(coin.count).to eq(1)
+          expect(coin.first['market_cap_eur'].to_i).to be > 0
+        end
+      end
+    end
   end
 
   describe "#global" do

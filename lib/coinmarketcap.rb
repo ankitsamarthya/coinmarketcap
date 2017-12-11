@@ -12,8 +12,8 @@ module Coinmarketcap
     end
   end
 
-  def self.coin(id)
-    HTTParty.get("https://api.coinmarketcap.com/v1/ticker/#{id}/")
+  def self.coin(id, currency = 'USD')
+    HTTParty.get("https://api.coinmarketcap.com/v1/ticker/#{id}/?convert=#{currency}")
   end
 
   def self.global(currency = 'USD')
