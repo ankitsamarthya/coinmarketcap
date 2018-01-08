@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'coveralls'
-Coveralls.wear!
+require 'simplecov'
+
+SimpleCov.start do
+  add_filter '/spec/'
+end
 
 require 'coinmarketcap'
 require 'webmock/rspec'
