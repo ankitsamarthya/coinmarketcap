@@ -1,26 +1,26 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
-require 'coveralls'
-Coveralls.wear!
+require 'simplecov'
+
+SimpleCov.start do
+  add_filter '/spec/'
+end
 
 require 'coinmarketcap'
-require 'vcr'
 require 'webmock/rspec'
 require 'pry'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
-  config.example_status_persistence_file_path = ".rspec_status"
-
-  # Disable RSpec exposing methods globally on `Module` and `main`
-  # config.disable_monkey_patching!
-
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
-  end
+  config.example_status_persistence_file_path = '.rspec_status'
+  config.order = :random
 end
 
-VCR.configure do |c|
-  c.cassette_library_dir = "spec/fixtures/cassettes"
-  c.hook_into :webmock
-  c.default_cassette_options = { :record => :once }
+WebMock.enable!
+
+def fixture(file_name, json: false, symbolize: false)
+  file = File.read("./spec/fixtures/#{file_name}")
+  return file unless json
+  JSON.parse(file, symbolize_names: symbolize)
 end
