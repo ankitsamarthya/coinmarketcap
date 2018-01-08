@@ -1,3 +1,5 @@
-module Coinmarketcap
-  VERSION = "0.2.4"
+# frozen_string_literal: true
+
+module CoinMarketCap
+  VERSION = '0.1.20180108'
 end

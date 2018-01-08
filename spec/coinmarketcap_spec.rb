@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe Coinmarketcap do
-  it { expect(Coinmarketcap::VERSION).not_to be nil }
+describe CoinMarketCap do
+  it { expect(CoinMarketCap::VERSION).not_to be nil }
 
   describe '#coins' do
     it 'returns all coins on default' do

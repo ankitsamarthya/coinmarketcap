@@ -6,7 +6,7 @@ require 'coinmarketcap/version'
 require 'http'
 require 'nokogiri'
 
-module Coinmarketcap
+module CoinMarketCap
   API_URL = 'https://api.coinmarketcap.com/v1'.freeze
   BASE_URL = 'https://coinmarketcap.com'.freeze
 
@@ -29,7 +29,7 @@ module Coinmarketcap
     JSON.parse(response.body.to_s, symbolize_names: true)
   end
 
-  # @param id [Integer] Coinmarketcap coin id
+  # @param id [Integer] CoinMarketCap coin id
   # @param currency [String] Country currency code to convert price
   # @return [Hash]
   def self.coin(id, currency: nil)
@@ -93,7 +93,7 @@ module Coinmarketcap
     JSON.parse(response.body.to_s, symbolize_names: true)
   end
 
-  # @param id [String] Coinmarketcap coin id
+  # @param id [String] CoinMarketCap coin id
   # @param start_date [String] Start date (YYYY-MM-DD)
   # @param end_date [String] End date (YYYY-MM-DD)
   # @return [Array<Hash>]
