@@ -41,39 +41,25 @@ describe Coinmarketcap do
   end
 
   describe '#coin' do
-    context 'with valid id' do
-      it 'should receive a 200 response with coin details' do
-        VCR.use_cassette('single_coin_response') do
-          response = Coinmarketcap.coin('bitcoin')
-          coin = JSON.parse(response.body)
-          expect(response.code).to eq(200)
-          expect(coin.count).to eq(1)
-          expect(coin.first['id']).to eq('bitcoin')
-        end
-      end
+    it 'returns coin info' do
+      stub_request(:get, /ticker\/bitcoin/).and_return(body: fixture('coin.json'))
+      response = subject.coin('bitcoin')
+      expect(a_request(:get, /ticker\/bitcoin/)).to have_been_made.once
+      expect(response.first).to be_a(Hash)
     end
 
-    context 'with invalid id' do
-      it 'should receive a 404 response' do
-        VCR.use_cassette('wrong_coin_response') do
-          response = Coinmarketcap.coin('random')
-          coin = JSON.parse(response.body)
-          expect(response.code).to eq(404)
-          expect(coin['error']).to match(/id not found/)
-        end
-      end
+    it 'returns coin with convert currency' do
+      stub_request(:get, /ticker\/bitcoin/).and_return(body: fixture('coin.json'))
+      response = subject.coin('bitcoin', currency: 'EUR')
+      expect(a_request(:get, /ticker\/bitcoin\/\?convert=EUR/)).to have_been_made.once
+      expect(response.first).to be_a(Hash)
     end
 
-    context 'with valid id and a currency code' do
-      it 'should receive a 200 response with coin details' do
-        VCR.use_cassette('single_eur_coin_response') do
-          response = Coinmarketcap.coin('bitcoin', 'EUR')
-          coin = JSON.parse(response.body)
-          expect(response.code).to eq(200)
-          expect(coin.count).to eq(1)
-          expect(coin.first['market_cap_eur'].to_i).to be > 0
-        end
-      end
+    it 'returns coin error' do
+      stub_request(:get, /ticker\/bitco/).and_return(body: fixture('coin_error.json'))
+      response = subject.coin('bitco')
+      expect(a_request(:get, /ticker\/bitco/)).to have_been_made.once
+      expect(response).to be_a(Hash)
     end
   end
 

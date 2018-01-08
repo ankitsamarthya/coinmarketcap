@@ -22,13 +22,26 @@ module Coinmarketcap
       convert: currency
     }.compact.to_param
 
-    url = "#{API_URI}/ticker/" << "?#{params}" if params.present?
+    url = "#{API_URI}/ticker/"
+    url << "?#{params}" if params.present?
+
     response = HTTP.get(url)
     JSON.parse(response.body.to_s, symbolize_names: true)
   end
 
-  def self.coin(id, currency = 'USD')
-    HTTP.get("https://api.coinmarketcap.com/v1/ticker/#{id}/?convert=#{currency}")
+  # @param id [Integer] Coinmarketcap coin id
+  # @param currency [String] Country currency code to convert price
+  # @return [Hash]
+  def self.coin(id, currency: nil)
+    params = {
+      convert: currency
+    }.compact.to_param
+
+    url = "#{API_URI}/ticker/#{id}/"
+    url << "?#{params}" if params.present?
+
+    response = HTTP.get(url)
+    JSON.parse(response.body.to_s, symbolize_names: true)
   end
 
   def self.global(currency = 'USD')
