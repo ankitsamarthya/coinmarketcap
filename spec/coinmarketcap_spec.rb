@@ -68,14 +68,20 @@ describe Coinmarketcap do
   end
 
   describe '#historical_price' do
-    context 'with valid id and start and end dates' do
-      it 'should receive an non empty array' do
-        VCR.use_cassette('historical_price_response') do
-          data = Coinmarketcap.get_historical_price('bitcoin', '20170908', '20170914')
-          expect(data).to be_a Array
-          expect(data.count).to be > 0
-        end
-      end
+    it 'parses html and returns prices' do
+      stub_request(:get, /historical-data/).and_return(body: fixture('historical_price.html'))
+      response = subject.historical_price('request-network', '2018-01-02', '2018-01-08')
+      expect(a_request(:get, /currencies\/request-network\/historical-data\/\?end=20180108\&start=20180102/)).to have_been_made.once
+      expect(response).to be_a(Array)
+      expect(response.first).to be_a(Hash)
+      expect(response.first).to eq(
+        date: '2018-01-07',
+        open: 0.97823,
+        high: 1.05,
+        low: 0.92497,
+        close: 0.935619,
+        average: 0.987485e0
+      )
     end
   end
 end
