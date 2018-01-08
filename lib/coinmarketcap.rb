@@ -1,28 +1,43 @@
+# frozen_string_literal: false
+
+require 'active_support'
+require 'active_support/core_ext'
 require 'coinmarketcap/version'
-require 'open-uri'
-require 'httparty'
+require 'http'
 require 'nokogiri'
 
 module Coinmarketcap
-  def self.coins(limit = nil)
-    if limit.nil?
-      HTTParty.get('https://api.coinmarketcap.com/v1/ticker/')
-    else
-      HTTParty.get("https://api.coinmarketcap.com/v1/ticker/?limit=#{limit}")
-    end
+  API_URI = 'https://api.coinmarketcap.com/v1'.freeze
+  BASE_URI = 'https://coinmarketcap.com'.freeze
+
+  # @param rank [Integer] Coins market cap rank greater than or equal
+  # @param limit [Integer] Maximum limit set. Defaults to 0 to return all results
+  # @param currency [String] Country currency code to convert price
+  # @return [Hash]
+  # @see https://coinmarketcap.com/api/
+  def self.coins(limit: 0, rank: nil, currency: nil)
+    params = {
+      limit: limit,
+      start: rank,
+      convert: currency
+    }.compact.to_param
+
+    url = "#{API_URI}/ticker/" << "?#{params}" if params.present?
+    response = HTTP.get(url)
+    JSON.parse(response.body.to_s, symbolize_names: true)
   end
 
   def self.coin(id, currency = 'USD')
-    HTTParty.get("https://api.coinmarketcap.com/v1/ticker/#{id}/?convert=#{currency}")
+    HTTP.get("https://api.coinmarketcap.com/v1/ticker/#{id}/?convert=#{currency}")
   end
 
   def self.global(currency = 'USD')
-    HTTParty.get("https://api.coinmarketcap.com/v1/global/?convert=#{currency}")
+    HTTP.get("https://api.coinmarketcap.com/v1/global/?convert=#{currency}")
   end
 
   def self.get_historical_price(id, start_date, end_date) # 20170908
     prices = []
-    doc = Nokogiri::HTML(open("https://coinmarketcap.com/currencies/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
+    doc = Nokogiri::HTML(open("/currencies/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
     rows = doc.css('tr')
     if rows.count == 31
       doc = Nokogiri::HTML(open("https://coinmarketcap.com/assets/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))

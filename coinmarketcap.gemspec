@@ -34,6 +34,8 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'http',           '~> 3.0'
   spec.add_runtime_dependency 'nokogiri',       '~> 1.8'
+  spec.add_dependency 'activesupport',          '~> 5.1'
+
   spec.add_development_dependency 'bundler',    '~> 1.14'
   spec.add_development_dependency 'coveralls',  '~> 0.8'
   spec.add_development_dependency 'pry',        '~> 0.11'

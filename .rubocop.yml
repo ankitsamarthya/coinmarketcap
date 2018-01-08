@@ -1,2 +1,14 @@
 AllCops:
   TargetRubyVersion: 2.3
+  Exclude:
+    - 'Gemfile'
+Documentation:
+  Enabled: false
+LineLength:
+  Max: 140
+Style/RaiseArgs:
+  EnforcedStyle: compact
+Metrics/AbcSize:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 30
