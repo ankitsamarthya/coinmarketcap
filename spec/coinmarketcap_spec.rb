@@ -33,14 +33,14 @@ describe Coinmarketcap do
       stub_request(:get, /ticker\/bitcoin/).and_return(body: fixture('coin.json'))
       response = subject.coin('bitcoin')
       expect(a_request(:get, /ticker\/bitcoin/)).to have_been_made.once
-      expect(response.first).to be_a(Hash)
+      expect(response).to be_a(Hash)
     end
 
     it 'returns coin with convert currency' do
       stub_request(:get, /ticker\/bitcoin/).and_return(body: fixture('coin.json'))
       response = subject.coin('bitcoin', currency: 'EUR')
       expect(a_request(:get, /ticker\/bitcoin\/\?convert=EUR/)).to have_been_made.once
-      expect(response.first).to be_a(Hash)
+      expect(response).to be_a(Hash)
     end
 
     it 'returns coin error' do
@@ -48,6 +48,57 @@ describe Coinmarketcap do
       response = subject.coin('bitco')
       expect(a_request(:get, /ticker\/bitco/)).to have_been_made.once
       expect(response).to be_a(Hash)
+    end
+  end
+
+  describe '#coin_by_symbol' do
+    it 'returns coin' do
+      stub_request(:get, /ticker/).and_return(body: fixture('coins.json'))
+      response = subject.coin_by_symbol('miota')
+      expect(a_request(:get, /ticker\/\?limit=0/)).to have_been_made.once
+      expect(response).to be_a(Hash)
+      expect(response).not_to be_empty
+    end
+  end
+
+  describe '#coin_markets' do
+    it 'returns markets by id' do
+      stub_request(:get, /currencies\/litecoin\/\#markets/).and_return(body: fixture('coin_markets.html'))
+      response = subject.coin_markets(id: 'litecoin')
+      expect(a_request(:get, /currencies\/litecoin\/\#markets/)).to have_been_made.once
+      expect(response).to be_a(Array)
+      expect(response.count).to eq(16)
+      expect(response.first).to eq(
+        source: 'Binance',
+        pair: 'IOTA/BTC',
+        volume_usd: 97_152_900.0,
+        price_usd: 4.13,
+        volume_percentage: 38.17,
+        last_updated: 'Recently'
+      )
+    end
+
+    it 'returns markets by symbol' do
+      stub_request(:get, /currencies\/litecoin\/\#markets/).and_return(body: fixture('coin_markets.html'))
+      stub_request(:get, /ticker/).and_return(body: fixture('coins.json'))
+
+      response = subject.coin_markets(symbol: 'LTC')
+      expect(a_request(:get, /ticker\/\?limit=0/)).to have_been_made.once
+      expect(a_request(:get, /currencies\/litecoin\/\#markets/)).to have_been_made.once
+      expect(response).to be_a(Array)
+      expect(response.count).to eq(16)
+      expect(response.first).to eq(
+        source: 'Binance',
+        pair: 'IOTA/BTC',
+        volume_usd: 97_152_900.0,
+        price_usd: 4.13,
+        volume_percentage: 38.17,
+        last_updated: 'Recently'
+      )
+    end
+
+    it do
+      expect { subject.coin_markets }.to raise_error(ArgumentError, 'id or symbol is required')
     end
   end
 
@@ -80,7 +131,7 @@ describe Coinmarketcap do
         high: 1.05,
         low: 0.92497,
         close: 0.935619,
-        average: 0.987485e0
+        average: 0.987485
       )
     end
   end
