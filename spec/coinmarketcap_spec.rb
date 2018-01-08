@@ -5,18 +5,6 @@ require 'spec_helper'
 describe Coinmarketcap do
   it { expect(Coinmarketcap::VERSION).not_to be nil }
 
-  describe '#get_historical_price' do
-    context 'with valid id and start and end dates' do
-      it 'should receive an non empty array' do
-        VCR.use_cassette('historical_price_response') do
-          data = Coinmarketcap.get_historical_price('bitcoin', '20170908', '20170914')
-          expect(data).to be_a Array
-          expect(data.count).to be > 0
-        end
-      end
-    end
-  end
-
   describe '#coins' do
     it 'returns all coins on default' do
       stub_request(:get, /ticker/).and_return(body: fixture('coins.json'))
@@ -64,22 +52,28 @@ describe Coinmarketcap do
   end
 
   describe '#global' do
-    it 'should receive a 200 response with global details' do
-      VCR.use_cassette('global_coin_response') do
-        response = Coinmarketcap.global
-        global = JSON.parse(response.body)
-        expect(response.code).to eq(200)
-        expect(global['active_currencies']).to be > 0
-      end
+    it 'returns global info' do
+      stub_request(:get, /global/).and_return(body: fixture('global.json'))
+      response = subject.global
+      expect(a_request(:get, /global/)).to have_been_made.once
+      expect(response).to be_a(Hash)
     end
 
-    context 'with valid currency code' do
-      it 'should receive a 200 response with global details in that currency' do
-        VCR.use_cassette('global_eur_coin_response') do
-          response = Coinmarketcap.global('EUR')
-          global = JSON.parse(response.body)
-          expect(response.code).to eq(200)
-          expect(global['total_market_cap_eur']).to be > 0
+    it 'returns global with convert currency' do
+      stub_request(:get, /global/).and_return(body: fixture('global.json'))
+      response = subject.global(currency: 'EUR')
+      expect(a_request(:get, /global\/\?convert=EUR/)).to have_been_made.once
+      expect(response).to be_a(Hash)
+    end
+  end
+
+  describe '#historical_price' do
+    context 'with valid id and start and end dates' do
+      it 'should receive an non empty array' do
+        VCR.use_cassette('historical_price_response') do
+          data = Coinmarketcap.get_historical_price('bitcoin', '20170908', '20170914')
+          expect(data).to be_a Array
+          expect(data.count).to be > 0
         end
       end
     end

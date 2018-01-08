@@ -7,8 +7,8 @@ require 'http'
 require 'nokogiri'
 
 module Coinmarketcap
-  API_URI = 'https://api.coinmarketcap.com/v1'.freeze
-  BASE_URI = 'https://coinmarketcap.com'.freeze
+  API_URL = 'https://api.coinmarketcap.com/v1'.freeze
+  BASE_URL = 'https://coinmarketcap.com'.freeze
 
   # @param rank [Integer] Coins market cap rank greater than or equal
   # @param limit [Integer] Maximum limit set. Defaults to 0 to return all results
@@ -22,7 +22,7 @@ module Coinmarketcap
       convert: currency
     }.compact.to_param
 
-    url = "#{API_URI}/ticker/"
+    url = "#{API_URL}/ticker/"
     url << "?#{params}" if params.present?
 
     response = HTTP.get(url)
@@ -37,43 +37,51 @@ module Coinmarketcap
       convert: currency
     }.compact.to_param
 
-    url = "#{API_URI}/ticker/#{id}/"
+    url = "#{API_URL}/ticker/#{id}/"
     url << "?#{params}" if params.present?
 
     response = HTTP.get(url)
     JSON.parse(response.body.to_s, symbolize_names: true)
   end
 
-  def self.global(currency = 'USD')
-    HTTP.get("https://api.coinmarketcap.com/v1/global/?convert=#{currency}")
+  # @param currency [String] Country currency code to convert price
+  # @return [Hash]
+  def self.global(currency: nil)
+    params = {
+      convert: currency
+    }.compact.to_param
+
+    url = "#{API_URI}/global/"
+    url << "?#{params}" if params.present?
+
+    response = HTTP.get(url)
+    JSON.parse(response.body.to_s, symbolize_names: true)
   end
 
-  def self.get_historical_price(id, start_date, end_date) # 20170908
-    prices = []
-    doc = Nokogiri::HTML(open("/currencies/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
-    rows = doc.css('tr')
-    if rows.count == 31
-      doc = Nokogiri::HTML(open("https://coinmarketcap.com/assets/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
-      rows = doc.css('tr')
+  def self.historical_price(id, start_date, end_date)
+    sd = start_date.to_date.to_s.delete('-')
+    ed = end_date.to_date.to_s.delete('-')
+
+    url = "#{BASE_URL}/currencies/#{id}/historical-data/?start=#{sd}&end=#{ed}"
+    response = HTTP.get(url)
+    html = Nokogiri::HTML(response.body.to_s)
+    rows = html.css('#historical-data table tbody tr')
+
+    prices = rows.each_with_object([]) do |row, arr|
+      td = row.css('td')
+
+      daily = {
+        date: Date.parse(td[0].text).to_s,
+        open: td[1].text.to_f,
+        high: td[2].text.to_f,
+        low: td[3].text.to_f,
+        close: td[4].text.to_f
+      }
+
+      daily[:average] = (daily[:high] + daily[:low]).to_d / 2
+      arr << daily
     end
-    rows.shift
-    rows.each do |row|
-      begin
-        each_row = Nokogiri::HTML(row.to_s).css('td')
-        if each_row.count > 1
-          price_bundle = {}
-          price_bundle[:date] = Date.parse(each_row[0].text)
-          price_bundle[:open] = each_row[1].text.to_f
-          price_bundle[:high] = each_row[2].text.to_f
-          price_bundle[:low] = each_row[3].text.to_f
-          price_bundle[:close] = each_row[4].text.to_f
-          price_bundle[:avg] = (price_bundle[:high] + price_bundle[:low]) / 2.0
-          prices << price_bundle
-        end
-      rescue
-        next
-      end
-    end
+
     prices
   end
 end
