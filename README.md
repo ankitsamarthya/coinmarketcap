@@ -1,17 +1,15 @@
-[![Gem Version](https://badge.fury.io/rb/coinmarketcap.svg)](https://badge.fury.io/rb/coinmarketcap) [![Build Status](https://travis-ci.org/ankitsamarthya/coinmarketcap.svg?branch=master)](https://travis-ci.org/ankitsamarthya/coinmarketcap) [![Code Climate](https://codeclimate.com/github/ankitsamarthya/coinmarketcap/badges/gpa.svg)](https://codeclimate.com/github/ankitsamarthya/coinmarketcap) [![Coverage Status](https://coveralls.io/repos/github/ankitsamarthya/coinmarketcap/badge.svg?branch=master)](https://coveralls.io/github/ankitsamarthya/coinmarketcap?branch=master) [![Issue Count](https://codeclimate.com/github/ankitsamarthya/coinmarketcap/badges/issue_count.svg)](https://codeclimate.com/github/ankitsamarthya/coinmarketcap)
+[![Gem Version](https://badge.fury.io/rb/coinmarketcap.svg)](https://badge.fury.io/rb/coinmarketcap) [![Build Status](https://travis-ci.org/kurt-smith/coinmarketcap.svg?branch=master)](https://travis-ci.org/kurt-smith/coinmarketcap) [![Code Climate](https://codeclimate.com/github/kurt-smith/coinmarketcap/badges/gpa.svg)](https://codeclimate.com/github/kurt-smith/coinmarketcap) [![Coverage Status](https://coveralls.io/repos/github/kurt-smith/coinmarketcap/badge.svg?branch=master)](https://coveralls.io/github/kurt-smith/coinmarketcap?branch=master) [![Issue Count](https://codeclimate.com/github/kurt-smith/coinmarketcap/badges/issue_count.svg)](https://codeclimate.com/github/kurt-smith/coinmarketcap)
 
-# CoinMarketCap
+# coinmarketcapper
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/coinmarketcap`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This project has been forked from the `coinmarketcap` gem to provide a wrapper to the public coinmarketcap.com V1 API.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'coinmarketcap'
+gem 'coinmarketcapper'
 ```
 
 And then execute:
@@ -20,11 +18,49 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install coinmarketcap
+    $ gem install coinmarketcapper
 
 ## Usage
 
-TODO: Write usage instructions here
+### Coinmarketcap.com API responses
+
+#### All Coins
+
+```ruby
+CoinMarketCap.coins(limit: 0, rank:  nil, currency: nil)
+```
+
+#### Coin by Coin Market Cap ID
+
+```ruby
+CoinMarketCap.coin('litecoin', currency: nil)
+```
+
+#### Global
+
+```ruby
+CoinMarketCap.global(currency: nil)
+```
+
+### Additional Functionality
+
+#### Coin by symbol
+
+```ruby
+CoinMarketCap.coin_by_symbol('LTC')
+```
+
+#### Retrieve markets by coin
+
+```ruby
+CoinMarketCap.coin_markets(id: 'iota')
+```
+
+#### Retrieve Coin historical price
+
+```ruby
+CoinMarketCap.historical_price('request-network', '2018-01-01', '2018-01-08')
+```
 
 ## Development
 
@@ -34,7 +70,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/ankitsamarthya/coinmarketcap. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kurt-smith/coinmarketcap. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -42,4 +78,4 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 ## Code of Conduct
 
-Everyone interacting in the CoinMarketCap project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/ankitsamarthya/coinmarketcap/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the CoinMarketCap project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/kurt-smith/coinmarketcap/blob/master/CODE_OF_CONDUCT.md).
