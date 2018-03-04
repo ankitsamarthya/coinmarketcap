@@ -12,6 +12,28 @@ module Coinmarketcap
     end
   end
 
+  def self.coins_sort(limit = nil, key = 'rank', order = 'asc')
+    if limit.nil?
+      response = HTTParty.get('https://api.coinmarketcap.com/v1/ticker/')
+    else
+      response = HTTParty.get("https://api.coinmarketcap.com/v1/ticker/?limit=#{limit}")
+    end
+    if ['id', 'name', 'symbol'].include?(key)
+      sorted_response = response.sort{ |a, b| a[key] <=> b[key] }
+    elsif response[0].keys.include?(key)
+      sorted_response = response.sort{ |a, b| a[key].to_i <=> b[key].to_i }
+    else
+      raise ArgumentError, "wrong argument: '#{key}'"
+    end
+    if order == 'asc'
+      sorted_response
+    elsif order == 'desc'
+      sorted_response.reverse
+    else
+      raise ArgumentError, "wrong argument: '#{order}'"
+    end
+  end
+
   def self.coin(id, currency = 'USD')
     HTTParty.get("https://api.coinmarketcap.com/v1/ticker/#{id}/?convert=#{currency}")
   end
