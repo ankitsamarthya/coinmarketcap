@@ -21,7 +21,7 @@ module Coinmarketcap
     if ['id', 'name', 'symbol'].include?(key)
       sorted_response = response.sort{ |a, b| a[key] <=> b[key] }
     elsif response[0].keys.include?(key)
-      sorted_response = response.sort{ |a, b| a[key].to_i <=> b[key].to_i }
+      sorted_response = response.sort{ |a, b| a[key].to_f <=> b[key].to_f }
     else
       raise ArgumentError, "wrong argument: '#{key}'"
     end
