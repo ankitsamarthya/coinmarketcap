@@ -121,7 +121,7 @@ To get information for a specific coin use the `coin` method.
   #=> returns information about coin with 'BTC' as its ticker symbol.
   # Price, 24h volume and market cap are in USD
 
-  Coinmarketcap.coins('BTC', 'EUR')
+  Coinmarketcap.coin('BTC', 'EUR')
   #=> returns information about coin with 'BTC' as its ticker symbol.
   # Price, 24h volume and market cap are in EUR
 ```
@@ -154,7 +154,7 @@ To get global (general) data, use the `global` method.
   #=> returns global data
   # Price, 24h volume and market cap are in USD
 
-  Coinmarketcap.coins('EUR')
+  Coinmarketcap.global('EUR')
   #=> returns global data
   # Price, 24h volume and market cap are in EUR
 ```
