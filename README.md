@@ -29,57 +29,69 @@ To get information for multiple coins use the `coins` method.
 
 | Name           | Type           | Description     |
 | :------------- | :------------- | :-------------  |
-| `limit`        | int            | Return a maximum of `limit` results (default is 100, use 0 to return all results) |
-
-**Sample Response**
-```json
-[
-    {
-        "id": "bitcoin",
-        "name": "Bitcoin",
-        "symbol": "BTC",
-        "rank": "1",
-        "price_usd": "573.137",
-        "price_btc": "1.0",
-        "24h_volume_usd": "72855700.0",
-        "market_cap_usd": "9080883500.0",
-        "available_supply": "15844176.0",
-        "total_supply": "15844176.0",
-        "percent_change_1h": "0.04",
-        "percent_change_24h": "-0.3",
-        "percent_change_7d": "-0.57",
-        "last_updated": "1472762067"
-    },
-    {
-        "id": "ethereum",
-        "name": "Ethereum",
-        "symbol": "ETH",
-        "rank": "2",
-        "price_usd": "12.1844",
-        "price_btc": "0.021262",
-        "24h_volume_usd": "24085900.0",
-        "market_cap_usd": "1018098455.0",
-        "available_supply": "83557537.0",
-        "total_supply": "83557537.0",
-        "percent_change_1h": "-0.58",
-        "percent_change_24h": "6.34",
-        "percent_change_7d": "8.59",
-        "last_updated": "1472762062"
-    },
-    ...
-]                               
-```
+| `limit`        | int            | Return a maximum of `limit` results (default is nil which returns all results) |
 
 **Examples**
 ```ruby
   Coinmarketcap.coins
-  #=> returns array of 100 coins
+  #=> returns array of all available coins sorted by rank
 
-  Coinmarketcap.coins(0)
-  #=> returns array of all available coins
-
-  Coinmarketcap.coins(20)
-  #=> returns array of only 20 coins
+  Coinmarketcap.coins(limit = 20)
+  #=> returns array of only 20 coins sorted by rank
+```
+**Sample Response**
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "website_slug": "bitcoin",
+      "rank": 1,
+      "circulating_supply": 17243837.0,
+      "total_supply": 17243837.0,
+      "max_supply": 21000000.0,
+      "quotes": {
+        "USD": {
+          "price": 7046.61259816,
+          "volume_24h": 4289789887.93929,
+          "market_cap": 121510639045.0,
+          "percent_change_1h": -0.09,
+          "percent_change_24h": 1.42,
+          "percent_change_7d": 4.74
+        }
+      },
+      "last_updated": 1535812825
+    },
+    {
+      "id": 1027,
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "website_slug": "ethereum",
+      "rank": 2,
+      "circulating_supply": 101689192.0,
+      "total_supply": 101689192.0,
+      "max_supply": null,
+      "quotes": {
+        "USD": {
+          "price": 287.025145487,
+          "volume_24h": 1359873785.37404,
+          "market_cap": 29187355119.0,
+          "percent_change_1h": 0.5,
+          "percent_change_24h": 2.93,
+          "percent_change_7d": 2.34
+        }
+      },
+      "last_updated": 1535812836
+    }
+  ],
+  "metadata": {
+    "timestamp": 1535812339,
+    "num_cryptocurrencies": 1910,
+    "error": null
+  }
+}
 ```
 
 ### Coin
@@ -89,41 +101,88 @@ To get information for a specific coin use the `coin` method.
 
 | Name           | Type           | Description     |
 | :------------- | :------------- | :-------------  |
-| `id`           | string         | **required**. Return information for coin with `id` |
+| `id`           | integer        | **required**. Use the ID returned from all coins api |
 | `currency`     | string         | return *price*, *24h volume*, and *market cap* in terms of another currency. Valid values are "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR". (default is "USD") |
-
-**Sample Response**
-```json
-[
-    {
-        "id": "bitcoin",
-        "name": "Bitcoin",
-        "symbol": "BTC",
-        "rank": "1",
-        "price_usd": "573.137",
-        "price_btc": "1.0",
-        "24h_volume_usd": "72855700.0",
-        "market_cap_usd": "9080883500.0",
-        "available_supply": "15844176.0",
-        "total_supply": "15844176.0",
-        "max_supply": "21000000.0",
-        "percent_change_1h": "0.04",
-        "percent_change_24h": "-0.3",
-        "percent_change_7d": "-0.57",
-        "last_updated": "1472762067"
-    }
-]      
-```
 
 **Examples**
 ```ruby
-  Coinmarketcap.coin('BTC')
-  #=> returns information about coin with 'BTC' as its ticker symbol.
+  Coinmarketcap.coin(1)
+  #=> returns information about coin with '1' as its id.
   # Price, 24h volume and market cap are in USD
+```
+**Sample Response**
+```json
+{
+  "data": {
+    "id": 1,
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "website_slug": "bitcoin",
+    "rank": 1,
+    "circulating_supply": 17243837.0,
+    "total_supply": 17243837.0,
+    "max_supply": 21000000.0,
+    "quotes": {
+      "USD": {
+        "price": 7056.36503616,
+        "volume_24h": 4310812630.28682,
+        "market_cap": 121678808496.0,
+        "percent_change_1h": 0.04,
+        "percent_change_24h": 1.54,
+        "percent_change_7d": 4.88
+      }
+    },
+    "last_updated": 1535813063
+  },
+  "metadata": {
+    "timestamp": 1535812601,
+    "error": null
+  }
+}
+```
 
-  Coinmarketcap.coin('BTC', 'EUR')
-  #=> returns information about coin with 'BTC' as its ticker symbol.
+```ruby
+  Coinmarketcap.coin(1, 'EUR')
+  #=> returns information about coin with '1' as its id.
   # Price, 24h volume and market cap are in EUR
+```
+**Sample Response**
+```json
+{
+  "data": {
+    "id": 1,
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "website_slug": "bitcoin",
+    "rank": 1,
+    "circulating_supply": 17243837.0,
+    "total_supply": 17243837.0,
+    "max_supply": 21000000.0,
+    "quotes": {
+      "USD": {
+        "price": 7057.5191433,
+        "volume_24h": 4315628117.49539,
+        "market_cap": 121698709731.0,
+        "percent_change_1h": 0.06,
+        "percent_change_24h": 1.56,
+        "percent_change_7d": 4.9
+      },
+      "EUR": {
+        "price": 6077.93548621,
+        "volume_24h": 3716618934.7870364,
+        "market_cap": 104806928821.0,
+        "percent_change_1h": 0.06,
+        "percent_change_24h": 1.56,
+        "percent_change_7d": 4.9
+      }
+    },
+    "last_updated": 1535813303
+  },
+  "metadata": {
+    "timestamp": 1535812810,
+    "error": null
+  }
+}
 ```
 
 ### Global
@@ -135,28 +194,63 @@ To get global (general) data, use the `global` method.
 | :------------- | :------------- | :-------------  |
 | `currency`     | string         | return *price*, *24h volume*, and *market cap* in terms of another currency. Valid values are "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR". (default is "USD") |
 
-**Sample Response**
-```json
-{
-    "total_market_cap_usd": 201241796675,
-    "total_24h_volume_usd": 4548680009,
-    "bitcoin_percentage_of_market_cap": 62.54,
-    "active_currencies": 896,
-    "active_assets": 360,
-    "active_markets": 6439,
-    "last_updated": 1509909852
-}                       
-```
-
 **Examples**
 ```ruby
   Coinmarketcap.global
   #=> returns global data
   # Price, 24h volume and market cap are in USD
+```
+**Sample Response**
+```json
+{
+  "data":  {
+    "active_cryptocurrencies":  1910,
+    "active_markets":  13693,
+    "bitcoin_percentage_of_market_cap":  52.38,
+    "quotes":  {
+      "USD":  {
+        "total_market_cap":  232365707542.0,
+        "total_volume_24h":  12929935868.0
+      }
+    },
+    "last_updated":  1535813364
+  },
+  "metadata":  {
+    "timestamp":  1535812887,
+    "error":  null
+  }
+}
+```
 
+```ruby
   Coinmarketcap.global('EUR')
   #=> returns global data
   # Price, 24h volume and market cap are in EUR
+```
+**Sample Response**
+```json
+{
+  "data":  {
+    "active_cryptocurrencies":  1910,
+    "active_markets":  13693,
+    "bitcoin_percentage_of_market_cap":  52.38,
+    "quotes":  {
+      "USD":  {
+        "total_market_cap":  232328115855.0,
+        "total_volume_24h":  12928585948.0
+      },
+      "EUR":  {
+        "total_market_cap":  200080973374.0,
+        "total_volume_24h":  11134098218.0
+      }
+    },
+    "last_updated":  1535813303
+  },
+  "metadata":  {
+    "timestamp":  1535812850,
+    "error":  null
+  }
+}
 ```
 
 ## Development

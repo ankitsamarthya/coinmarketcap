@@ -8,7 +8,7 @@ describe Coinmarketcap do
   describe "#get_historical_price" do
     context 'with valid id and start and end dates' do
       it "should receive an non empty array" do
-        VCR.use_cassette('historical_price_response', :record => :new_episodes) do
+        VCR.use_cassette('historical_price_response') do
           data = Coinmarketcap.get_historical_price('bitcoin', '20170908', '20170914')
           expect(data).to be_a Array
           expect(data.count).to be > 0
