@@ -106,4 +106,142 @@ http_interactions:
         \"1497641677\"\n    }\n]"
     http_version: 
   recorded_at: Fri, 16 Jun 2017 19:37:32 GMT
-recorded_with: VCR 3.0.3
+- request:
+    method: get
+    uri: https://api.coinmarketcap.com/v2/ticker/?limit=10&structure=array
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 01 Sep 2018 14:22:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d556590db5f024e87fbec36bb52feb7891535811760; expires=Sun, 01-Sep-19
+        14:22:40 GMT; path=/; domain=.coinmarketcap.com; HttpOnly; Secure
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - MISS
+      Vary:
+      - Accept-Encoding
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 453863f1a9c435a2-LHR
+    body:
+      encoding: ASCII-8BIT
+      string: "{\n    \"data\": [\n        {\n            \"id\": 1, \n            \"name\":
+        \"Bitcoin\", \n            \"symbol\": \"BTC\", \n            \"website_slug\":
+        \"bitcoin\", \n            \"rank\": 1, \n            \"circulating_supply\":
+        17243775.0, \n            \"total_supply\": 17243775.0, \n            \"max_supply\":
+        21000000.0, \n            \"quotes\": {\n                \"USD\": {\n                    \"price\":
+        7061.66986717, \n                    \"volume_24h\": 4278053675.05673, \n
+        \                   \"market_cap\": 121769846314.0, \n                    \"percent_change_1h\":
+        0.17, \n                    \"percent_change_24h\": 1.69, \n                    \"percent_change_7d\":
+        4.97\n                }\n            }, \n            \"last_updated\": 1535811683\n
+        \       }, \n        {\n            \"id\": 1027, \n            \"name\":
+        \"Ethereum\", \n            \"symbol\": \"ETH\", \n            \"website_slug\":
+        \"ethereum\", \n            \"rank\": 2, \n            \"circulating_supply\":
+        101688905.0, \n            \"total_supply\": 101688905.0, \n            \"max_supply\":
+        null, \n            \"quotes\": {\n                \"USD\": {\n                    \"price\":
+        286.672651522, \n                    \"volume_24h\": 1352632271.17001, \n
+        \                   \"market_cap\": 29151427973.0, \n                    \"percent_change_1h\":
+        0.45, \n                    \"percent_change_24h\": 2.8, \n                    \"percent_change_7d\":
+        2.22\n                }\n            }, \n            \"last_updated\": 1535811698\n
+        \       }, \n        {\n            \"id\": 52, \n            \"name\": \"XRP\",
+        \n            \"symbol\": \"XRP\", \n            \"website_slug\": \"ripple\",
+        \n            \"rank\": 3, \n            \"circulating_supply\": 39650153121.0,
+        \n            \"total_supply\": 99991852985.0, \n            \"max_supply\":
+        100000000000.0, \n            \"quotes\": {\n                \"USD\": {\n
+        \                   \"price\": 0.3391636373, \n                    \"volume_24h\":
+        228186264.429865, \n                    \"market_cap\": 13447890151.0, \n
+        \                   \"percent_change_1h\": 0.15, \n                    \"percent_change_24h\":
+        2.72, \n                    \"percent_change_7d\": 3.75\n                }\n
+        \           }, \n            \"last_updated\": 1535811723\n        }, \n        {\n
+        \           \"id\": 1831, \n            \"name\": \"Bitcoin Cash\", \n            \"symbol\":
+        \"BCH\", \n            \"website_slug\": \"bitcoin-cash\", \n            \"rank\":
+        4, \n            \"circulating_supply\": 17324663.0, \n            \"total_supply\":
+        17324663.0, \n            \"max_supply\": 21000000.0, \n            \"quotes\":
+        {\n                \"USD\": {\n                    \"price\": 573.671883372,
+        \n                    \"volume_24h\": 331603330.463086, \n                    \"market_cap\":
+        9938671765.0, \n                    \"percent_change_1h\": 2.37, \n                    \"percent_change_24h\":
+        6.56, \n                    \"percent_change_7d\": 7.5\n                }\n
+        \           }, \n            \"last_updated\": 1535811689\n        }, \n        {\n
+        \           \"id\": 1765, \n            \"name\": \"EOS\", \n            \"symbol\":
+        \"EOS\", \n            \"website_slug\": \"eos\", \n            \"rank\":
+        5, \n            \"circulating_supply\": 906245118.0, \n            \"total_supply\":
+        1006245120.0, \n            \"max_supply\": null, \n            \"quotes\":
+        {\n                \"USD\": {\n                    \"price\": 6.6007168713,
+        \n                    \"volume_24h\": 905315405.517365, \n                    \"market_cap\":
+        5981867437.0, \n                    \"percent_change_1h\": 0.34, \n                    \"percent_change_24h\":
+        6.52, \n                    \"percent_change_7d\": 31.83\n                }\n
+        \           }, \n            \"last_updated\": 1535811682\n        }, \n        {\n
+        \           \"id\": 512, \n            \"name\": \"Stellar\", \n            \"symbol\":
+        \"XLM\", \n            \"website_slug\": \"stellar\", \n            \"rank\":
+        6, \n            \"circulating_supply\": 18773340284.0, \n            \"total_supply\":
+        104244271426.0, \n            \"max_supply\": null, \n            \"quotes\":
+        {\n                \"USD\": {\n                    \"price\": 0.2266392208,
+        \n                    \"volume_24h\": 51014738.3336376, \n                    \"market_cap\":
+        4254775213.0, \n                    \"percent_change_1h\": 0.63, \n                    \"percent_change_24h\":
+        3.9, \n                    \"percent_change_7d\": 4.67\n                }\n
+        \           }, \n            \"last_updated\": 1535811733\n        }, \n        {\n
+        \           \"id\": 2, \n            \"name\": \"Litecoin\", \n            \"symbol\":
+        \"LTC\", \n            \"website_slug\": \"litecoin\", \n            \"rank\":
+        7, \n            \"circulating_supply\": 58101054.0, \n            \"total_supply\":
+        58101054.0, \n            \"max_supply\": 84000000.0, \n            \"quotes\":
+        {\n                \"USD\": {\n                    \"price\": 63.7510076456,
+        \n                    \"volume_24h\": 289294542.048178, \n                    \"market_cap\":
+        3704000724.0, \n                    \"percent_change_1h\": -0.23, \n                    \"percent_change_24h\":
+        6.74, \n                    \"percent_change_7d\": 10.23\n                }\n
+        \           }, \n            \"last_updated\": 1535811720\n        }, \n        {\n
+        \           \"id\": 825, \n            \"name\": \"Tether\", \n            \"symbol\":
+        \"USDT\", \n            \"website_slug\": \"tether\", \n            \"rank\":
+        8, \n            \"circulating_supply\": 2742140336.0, \n            \"total_supply\":
+        3080109502.0, \n            \"max_supply\": null, \n            \"quotes\":
+        {\n                \"USD\": {\n                    \"price\": 1.0007886702,
+        \n                    \"volume_24h\": 2637803763.44931, \n                    \"market_cap\":
+        2744302980.0, \n                    \"percent_change_1h\": 0.19, \n                    \"percent_change_24h\":
+        0.0, \n                    \"percent_change_7d\": 0.12\n                }\n
+        \           }, \n            \"last_updated\": 1535811746\n        }, \n        {\n
+        \           \"id\": 2010, \n            \"name\": \"Cardano\", \n            \"symbol\":
+        \"ADA\", \n            \"website_slug\": \"cardano\", \n            \"rank\":
+        9, \n            \"circulating_supply\": 25927070538.0, \n            \"total_supply\":
+        31112483745.0, \n            \"max_supply\": 45000000000.0, \n            \"quotes\":
+        {\n                \"USD\": {\n                    \"price\": 0.1040200019,
+        \n                    \"volume_24h\": 52048429.4421475, \n                    \"market_cap\":
+        2696933927.0, \n                    \"percent_change_1h\": -0.06, \n                    \"percent_change_24h\":
+        4.36, \n                    \"percent_change_7d\": 11.0\n                }\n
+        \           }, \n            \"last_updated\": 1535811751\n        }, \n        {\n
+        \           \"id\": 1720, \n            \"name\": \"IOTA\", \n            \"symbol\":
+        \"MIOTA\", \n            \"website_slug\": \"iota\", \n            \"rank\":
+        10, \n            \"circulating_supply\": 2779530283.0, \n            \"total_supply\":
+        2779530283.0, \n            \"max_supply\": 2779530283.0, \n            \"quotes\":
+        {\n                \"USD\": {\n                    \"price\": 0.7375321546,
+        \n                    \"volume_24h\": 52473201.6155642, \n                    \"market_cap\":
+        2049992958.0, \n                    \"percent_change_1h\": 0.96, \n                    \"percent_change_24h\":
+        5.36, \n                    \"percent_change_7d\": 38.32\n                }\n
+        \           }, \n            \"last_updated\": 1535811749\n        }\n    ],
+        \n    \"metadata\": {\n        \"timestamp\": 1535811227, \n        \"num_cryptocurrencies\":
+        1910, \n        \"error\": null\n    }\n}"
+    http_version: 
+  recorded_at: Sat, 01 Sep 2018 14:22:41 GMT
+recorded_with: VCR 4.0.0
