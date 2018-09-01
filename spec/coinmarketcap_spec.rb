@@ -8,7 +8,7 @@ describe Coinmarketcap do
   describe "#get_historical_price" do
     context 'with valid id and start and end dates' do
       it "should receive an non empty array" do
-        VCR.use_cassette('historical_price_response') do
+        VCR.use_cassette('historical_price_response', :record => :new_episodes) do
           data = Coinmarketcap.get_historical_price('bitcoin', '20170908', '20170914')
           expect(data).to be_a Array
           expect(data.count).to be > 0
@@ -22,7 +22,7 @@ describe Coinmarketcap do
       it "should receive a 200 response with all coins" do
         VCR.use_cassette('all_coin_response') do
           response = Coinmarketcap.coins
-          coins = JSON.parse(response.body)
+          coins = response["data"]
           expect(response.code).to eq(200)
           expect(coins.count).to be > 0
         end
@@ -33,7 +33,7 @@ describe Coinmarketcap do
       it "should receive a 200 response with all coins" do
         VCR.use_cassette('limit_coin_response') do
           response = Coinmarketcap.coins(limit = 10)
-          coins = JSON.parse(response.body)
+          coins = response["data"]
           expect(response.code).to eq(200)
           expect(coins.count).to eq(10)
         end
@@ -45,11 +45,10 @@ describe Coinmarketcap do
     context 'with valid id' do
       it "should receive a 200 response with coin details" do
         VCR.use_cassette('single_coin_response') do
-          response = Coinmarketcap.coin('bitcoin')
-          coin = JSON.parse(response.body)
+          response = Coinmarketcap.coin('1')
+          coin = response["data"]
           expect(response.code).to eq(200)
-          expect(coin.count).to eq(1)
-          expect(coin.first['id']).to eq('bitcoin')
+          expect(coin['id']).to eq(1)
         end
       end
     end
@@ -60,7 +59,8 @@ describe Coinmarketcap do
           response = Coinmarketcap.coin('random')
           coin = JSON.parse(response.body)
           expect(response.code).to eq(404)
-          expect(coin['error']).to match(/id not found/)
+          expect(coin['data']).to be_nil
+          expect(coin['metadata']['error']).to match(/id not found/)
         end
       end
     end
@@ -68,11 +68,11 @@ describe Coinmarketcap do
     context 'with valid id and a currency code' do
       it "should receive a 200 response with coin details" do
         VCR.use_cassette('single_eur_coin_response') do
-          response = Coinmarketcap.coin('bitcoin', 'EUR')
-          coin = JSON.parse(response.body)
+          response = Coinmarketcap.coin('1', 'EUR')
+          coin = response["data"]
           expect(response.code).to eq(200)
-          expect(coin.count).to eq(1)
-          expect(coin.first['market_cap_eur'].to_i).to be > 0
+          expect(coin['id']).to eq(1)
+          expect(coin['quotes']['EUR']).to be_present
         end
       end
     end
@@ -82,9 +82,10 @@ describe Coinmarketcap do
     it "should receive a 200 response with global details" do
       VCR.use_cassette('global_coin_response') do
         response = Coinmarketcap.global
-        global = JSON.parse(response.body)
+        global = response["data"]
         expect(response.code).to eq(200)
-        expect(global['active_currencies']).to be > 0
+        expect(global['active_cryptocurrencies']).to be > 0
+        expect(global['active_markets']).to be > 0
       end
     end
 
@@ -92,9 +93,10 @@ describe Coinmarketcap do
       it "should receive a 200 response with global details in that currency" do
         VCR.use_cassette('global_eur_coin_response') do
           response = Coinmarketcap.global('EUR')
-          global = JSON.parse(response.body)
+          global = response["data"]
           expect(response.code).to eq(200)
-          expect(global['total_market_cap_eur']).to be > 0
+          expect(global['active_cryptocurrencies']).to be > 0
+          expect(global['quotes']['EUR']).to be_present
         end
       end
     end

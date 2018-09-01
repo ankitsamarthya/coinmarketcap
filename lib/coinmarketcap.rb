@@ -6,28 +6,24 @@ require 'nokogiri'
 module Coinmarketcap
   def self.coins(limit = nil)
     if limit.nil?
-      HTTParty.get('https://api.coinmarketcap.com/v1/ticker/')
+      HTTParty.get('https://api.coinmarketcap.com/v2/ticker/?structure=array')
     else
-      HTTParty.get("https://api.coinmarketcap.com/v1/ticker/?limit=#{limit}")
+      HTTParty.get("https://api.coinmarketcap.com/v2/ticker/?limit=#{limit}&structure=array")
     end
   end
 
   def self.coin(id, currency = 'USD')
-    HTTParty.get("https://api.coinmarketcap.com/v1/ticker/#{id}/?convert=#{currency}")
+    HTTParty.get("https://api.coinmarketcap.com/v2/ticker/#{id}/?convert=#{currency}")
   end
 
   def self.global(currency = 'USD')
-    HTTParty.get("https://api.coinmarketcap.com/v1/global/?convert=#{currency}")
+    HTTParty.get("https://api.coinmarketcap.com/v2/global/?convert=#{currency}")
   end
 
   def self.get_historical_price(id, start_date, end_date) # 20170908
     prices = []
     doc = Nokogiri::HTML(open("https://coinmarketcap.com/currencies/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
     rows = doc.css('tr')
-    if rows.count == 31
-      doc = Nokogiri::HTML(open("https://coinmarketcap.com/assets/#{id}/historical-data/?start=#{start_date}&end=#{end_date}"))
-      rows = doc.css('tr')
-    end
     rows.shift
     rows.each do |row|
       begin

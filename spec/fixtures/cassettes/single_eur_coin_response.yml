@@ -37,29 +37,120 @@ http_interactions:
       - 37006e05cc932f0b-DEL
     body:
       encoding: ASCII-8BIT
-      string: |-
-        [
-            {
-                "id": "bitcoin", 
-                "name": "Bitcoin", 
-                "symbol": "BTC", 
-                "rank": "1", 
-                "price_usd": "11910.6", 
-                "price_btc": "1.0", 
-                "24h_volume_usd": "6975910000.0", 
-                "market_cap_usd": "199176342487", 
-                "available_supply": "16722612.0", 
-                "total_supply": "16722612.0", 
-                "max_supply": "21000000.0", 
-                "percent_change_1h": "-0.14", 
-                "percent_change_24h": "2.49", 
-                "percent_change_7d": "16.4", 
-                "last_updated": "1512518052", 
-                "price_eur": "10076.0460138", 
-                "24h_volume_eur": "5901431510.43", 
-                "market_cap_eur": "168497807983"
-            }
-        ]
+      string: "[\n    {\n        \"id\": \"bitcoin\", \n        \"name\": \"Bitcoin\",
+        \n        \"symbol\": \"BTC\", \n        \"rank\": \"1\", \n        \"price_usd\":
+        \"11910.6\", \n        \"price_btc\": \"1.0\", \n        \"24h_volume_usd\":
+        \"6975910000.0\", \n        \"market_cap_usd\": \"199176342487\", \n        \"available_supply\":
+        \"16722612.0\", \n        \"total_supply\": \"16722612.0\", \n        \"max_supply\":
+        \"21000000.0\", \n        \"percent_change_1h\": \"-0.14\", \n        \"percent_change_24h\":
+        \"2.49\", \n        \"percent_change_7d\": \"16.4\", \n        \"last_updated\":
+        \"1512518052\", \n        \"price_eur\": \"10076.0460138\", \n        \"24h_volume_eur\":
+        \"5901431510.43\", \n        \"market_cap_eur\": \"168497807983\"\n    }\n]"
     http_version: 
   recorded_at: Fri, 16 Jun 2017 20:13:31 GMT
-recorded_with: VCR 3.0.3
+- request:
+    method: get
+    uri: https://api.coinmarketcap.com/v2/ticker/bitcoin/?convert=EUR
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: NOT FOUND
+    headers:
+      Date:
+      - Sat, 01 Sep 2018 14:22:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d1111b8b897ebd564aa188d3fb9d14e2b1535811764; expires=Sun, 01-Sep-19
+        14:22:44 GMT; path=/; domain=.coinmarketcap.com; HttpOnly; Secure
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - HIT
+      Vary:
+      - Accept-Encoding
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 45386408df093488-LHR
+    body:
+      encoding: ASCII-8BIT
+      string: "{\n    \"data\": null, \n    \"metadata\": {\n        \"timestamp\":
+        1535811183, \n        \"error\": \"id not found\"\n    }\n}"
+    http_version: 
+  recorded_at: Sat, 01 Sep 2018 14:22:44 GMT
+- request:
+    method: get
+    uri: https://api.coinmarketcap.com/v2/ticker/1/?convert=EUR
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 01 Sep 2018 14:31:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d6ce49989465159f98c3fc690501ee4fe1535812308; expires=Sun, 01-Sep-19
+        14:31:48 GMT; path=/; domain=.coinmarketcap.com; HttpOnly; Secure
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - HIT
+      Vary:
+      - Accept-Encoding
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 45387151cf916b8b-LHR
+    body:
+      encoding: ASCII-8BIT
+      string: "{\n    \"data\": {\n        \"id\": 1, \n        \"name\": \"Bitcoin\",
+        \n        \"symbol\": \"BTC\", \n        \"website_slug\": \"bitcoin\", \n
+        \       \"rank\": 1, \n        \"circulating_supply\": 17243775.0, \n        \"total_supply\":
+        17243775.0, \n        \"max_supply\": 21000000.0, \n        \"quotes\": {\n
+        \           \"USD\": {\n                \"price\": 7060.30799031, \n                \"volume_24h\":
+        4283200319.29742, \n                \"market_cap\": 121746362416.0, \n                \"percent_change_1h\":
+        0.13, \n                \"percent_change_24h\": 1.64, \n                \"percent_change_7d\":
+        4.95\n            }, \n            \"EUR\": {\n                \"price\":
+        6080.337241255, \n                \"volume_24h\": 3688692114.978945, \n                \"market_cap\":
+        104847967312.0, \n                \"percent_change_1h\": 0.13, \n                \"percent_change_24h\":
+        1.64, \n                \"percent_change_7d\": 4.95\n            }\n        },
+        \n        \"last_updated\": 1535812224\n    }, \n    \"metadata\": {\n        \"timestamp\":
+        1535811760, \n        \"error\": null\n    }\n}"
+    http_version: 
+  recorded_at: Sat, 01 Sep 2018 14:31:48 GMT
+recorded_with: VCR 4.0.0
